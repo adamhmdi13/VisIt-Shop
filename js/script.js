@@ -11,6 +11,25 @@ function toggleLang() {
     currentLang = isAr ? 'en' : 'ar';
 }
 
+// Floating Particles
+function createParticles() {
+    const container = document.createElement('div');
+    container.className = 'particles-container';
+    document.body.prepend(container);
+
+    for (let i = 0; i < 30; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDuration = (15 + Math.random() * 20) + 's';
+        particle.style.animationDelay = (Math.random() * 20) + 's';
+        particle.style.width = (2 + Math.random() * 4) + 'px';
+        particle.style.height = particle.style.width;
+        container.appendChild(particle);
+    }
+}
+createParticles();
+
 // Animated Counter
 function animateCounters() {
     const counters = document.querySelectorAll('.stat-number');
