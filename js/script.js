@@ -1,3 +1,34 @@
+// Typing Effect
+function typeEffect() {
+    const arText = 'أقدم لكم أفضل المنتجات الرقمية: بلقنات ماينكرافت، بوتات ديسكورد، وسيرفرات جاهزة وخدمات احترافية';
+    const enText = 'I offer the best digital products: Minecraft plugins, Discord bots, ready servers, and professional services';
+    const elAr = document.querySelector('.hero-sub.ar');
+    const elEn = document.querySelector('.hero-sub.en');
+    let index = 0;
+    let isAr = true;
+
+    elAr.textContent = '';
+    elEn.textContent = '';
+    const cursor = '<span class="typing-cursor"></span>';
+
+    function type() {
+        const text = isAr ? arText : enText;
+        const el = isAr ? elAr : elEn;
+        if (isAr) elEn.style.display = 'none';
+        else elAr.style.display = 'none';
+
+        if (index < text.length) {
+            el.innerHTML = text.substring(0, index + 1) + cursor;
+            index++;
+            setTimeout(type, 30 + Math.random() * 40);
+        } else {
+            el.innerHTML = text;
+        }
+    }
+    type();
+}
+typeEffect();
+
 // Language Toggle
 let currentLang = 'ar';
 
@@ -11,20 +42,40 @@ function toggleLang() {
     currentLang = isAr ? 'en' : 'ar';
 }
 
-// Floating Particles
+// Neon Cursor Follower
+const cursor = document.createElement('div');
+cursor.className = 'cursor-follower';
+document.body.appendChild(cursor);
+
+document.addEventListener('mousemove', (e) => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+});
+
+document.querySelectorAll('a, button, .product-card').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('active'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('active'));
+});
+
+// Enhanced Neon Particles
 function createParticles() {
     const container = document.createElement('div');
     container.className = 'particles-container';
     document.body.prepend(container);
 
-    for (let i = 0; i < 30; i++) {
+    const colors = ['#00f0ff', '#ff00e4', '#b300ff', '#00ff88', '#0044ff'];
+
+    for (let i = 0; i < 50; i++) {
         const particle = document.createElement('div');
         particle.className = 'particle';
         particle.style.left = Math.random() * 100 + '%';
-        particle.style.animationDuration = (15 + Math.random() * 20) + 's';
+        particle.style.animationDuration = (15 + Math.random() * 25) + 's';
         particle.style.animationDelay = (Math.random() * 20) + 's';
-        particle.style.width = (2 + Math.random() * 4) + 'px';
-        particle.style.height = particle.style.width;
+        const size = 2 + Math.random() * 5;
+        particle.style.width = size + 'px';
+        particle.style.height = size + 'px';
+        particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+        particle.style.boxShadow = `0 0 ${size * 2}px ${particle.style.background}`;
         container.appendChild(particle);
     }
 }
